@@ -1,0 +1,34 @@
+services:
+  cli-proxy-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        VERSION: ${VERSION:-dokploy}
+        COMMIT: ${COMMIT:-local}
+        BUILD_DATE: ${BUILD_DATE:-unknown}
+    container_name: cli-proxy-api
+    restart: unless-stopped
+    environment:
+      TZ: ${TZ:-UTC}
+      MANAGEMENT_PASSWORD: ${MANAGEMENT_PASSWORD:-}
+    ports:
+      - "${CLI_PROXY_PORT:-8317}:8317"
+    volumes:
+      - cli-proxy-config:/CLIProxyAPI/config
+      - cli-proxy-auth:/root/.cli-proxy-api
+      - cli-proxy-logs:/CLIProxyAPI/logs
+    command:
+      - /bin/sh
+      - -c
+      - >-
+        mkdir -p /CLIProxyAPI/config &&
+        if [ ! -s /CLIProxyAPI/config/config.yaml ]; then
+          cp /CLIProxyAPI/config.example.yaml /CLIProxyAPI/config/config.yaml;
+        fi &&
+        exec ./CLIProxyAPI -config /CLIProxyAPI/config/config.yaml
+
+volumes:
+  cli-proxy-config:
+  cli-proxy-auth:
+  cli-proxy-logs:

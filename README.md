@@ -60,6 +60,8 @@ Get 10% OFF GLM CODING PLAN：https://z.ai/subscribe?ic=8JVLJQFSKB
 
 CLIProxyAPI Guides: [https://help.router-for.me/](https://help.router-for.me/)
 
+Dokploy deployment: see [DOKPLOY.md](DOKPLOY.md)
+
 ## Management API
 
 see [MANAGEMENT_API.md](https://help.router-for.me/management/api)
